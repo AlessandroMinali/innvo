@@ -1,0 +1,397 @@
+body {
+  background-color: #363E4A;
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
+h1 {
+  font-family: "Texta", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-align: center;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+input, textarea { color: white; }
+
+.container {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 20px 16px 40px 16px;
+  transform: translateZ(0);
+  text-align: center;
+}
+
+.form-footer {
+  margin-top: 2em;
+}
+
+.ui-input {
+  position: relative;
+  padding: 0;
+  border: 0;
+}
+
+.ui-input input {
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 0;
+  background: none;
+  padding: 16px 0 16px 0;
+  font-size: 24px;
+  outline: 0;
+  width: 100%;
+  tap-highlight-color: rgba(0, 0, 0, 0);
+  touch-callout: none;
+}
+
+.ui-input input + label {
+  position: relative;
+  display: block;
+  padding: 8px 0 8px 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: .0875em;
+  font-weight: 500;
+  text-align: left;
+}
+.ui-input input + label::before, .ui-input input + label::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 1px;
+}
+.ui-input input + label::before {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.ui-input input + label::after {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  background-color: #6EB1FF;
+  height: 2px;
+}
+.ui-input input + label span {
+  position: relative;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.ui-input input + label span::after {
+  content: attr(data-text);
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  transform: scaleX(1);
+  white-space: nowrap;
+  color: #fff;
+  background-image: linear-gradient(to right, #4A90E2 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 100% 50%;
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform: translateZ(0);
+  transition: background-position 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.ui-input input:focus + label::after,
+.ui-input input.error + label::after,
+.ui-input input:invalid + label::after,
+.ui-input input.filled + label::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.ui-input input:focus + label span::after,
+.ui-input input.error + label span::after,
+.ui-input input:invalid + label span::after,
+.ui-input input.filled + label span::after {
+  background-image: linear-gradient(to right, white 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input input.filled {
+  color: #ffffff;
+}
+.ui-input input.filled + label::after {
+  background-color: #ffffff;
+}
+.ui-input input.filled + label span::after {
+  background-image: linear-gradient(to right, #ffffff 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input input:focus {
+  color: #6EB1FF;
+}
+.ui-input input:focus + label::after {
+  background-color: #6EB1FF;
+}
+.ui-input input:focus + label span::after {
+  background-image: linear-gradient(to right, #6EB1FF 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input input.error,
+.ui-input input:invalid {
+  color: #E66161;
+}
+.ui-input input.error + label::after,
+.ui-input input:invalid + label::after {
+  background-color: #E66161;
+}
+.ui-input input.error + label span::after,
+.ui-input input:invalid + label span::after {
+  background-image: linear-gradient(to right, #E66161 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input textarea {
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 0;
+  background: none;
+  padding: 16px 0 16px 0;
+  font-size: 24px;
+  outline: 0;
+  width: 100%;
+  height: 200px;
+  tap-highlight-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, .1);
+  touch-callout: none;
+}
+
+.ui-input textarea + label {
+  position: relative;
+  display: block;
+  padding: 8px 0 8px 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: .0875em;
+  font-weight: 500;
+  text-align: left;
+}
+.ui-input textarea + label::before, .ui-input textarea + label::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 1px;
+}
+.ui-input textarea + label::before {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.ui-input textarea + label::after {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  background-color: #6EB1FF;
+  height: 2px;
+}
+.ui-input textarea + label span {
+  position: relative;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.ui-input textarea + label span::after {
+  content: attr(data-text);
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  transform: scaleX(1);
+  white-space: nowrap;
+  color: #fff;
+  background-image: linear-gradient(to right, #4A90E2 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 100% 50%;
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform: translateZ(0);
+  transition: background-position 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.ui-input textarea:focus + label::after,
+.ui-input textarea.error + label::after,
+.ui-input textarea:invalid + label::after,
+.ui-input textarea.filled + label::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.ui-input textarea:focus + label span::after,
+.ui-input textarea.error + label span::after,
+.ui-input textarea:invalid + label span::after,
+.ui-input textarea.filled + label span::after {
+  background-image: linear-gradient(to right, white 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input textarea.filled {
+  color: #ffffff;
+}
+.ui-input textarea.filled + label::after {
+  background-color: #ffffff;
+}
+.ui-input textarea.filled + label span::after {
+  background-image: linear-gradient(to right, #ffffff 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input textarea:focus {
+  color: #6EB1FF;
+}
+.ui-input textarea:focus + label::after {
+  background-color: #6EB1FF;
+}
+.ui-input textarea:focus + label span::after {
+  background-image: linear-gradient(to right, #6EB1FF 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.ui-input textarea.error,
+.ui-input textarea:invalid {
+  color: #E66161;
+}
+.ui-input textarea.error + label::after,
+.ui-input textarea:invalid + label::after {
+  background-color: #E66161;
+}
+.ui-input textarea.error + label span::after,
+.ui-input textarea:invalid + label span::after {
+  background-image: linear-gradient(to right, #E66161 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: 0% 50%;
+}
+
+.btn {
+  border: 0;
+  background-color: #50617A;
+  padding: 18px 30px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: .0875em;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-radius: 100px;
+  outline: 0;
+  transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.btn:focus, .btn:active,
+.btn:hover {
+  background-color: #6EB1FF;
+  color: white;
+}
+
+.__first, .__second, .__third, .__fourth {
+  animation-name: fadeIn;
+  animation-duration: 180ms;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+
+.__first {
+  animation-delay: 0;
+}
+
+.__second {
+  animation-delay: 80ms;
+}
+
+.__third {
+  animation-delay: 180ms;
+}
+
+.__fourth {
+  animation-delay: 360ms;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -25%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+ul {
+  padding: 0px;
+}
+
+.items a {
+  text-decoration: none;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-wrap: break-word;
+}
+
+.items a:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+span {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.big {
+  font-size: 24px;
+  margin: 20px;
+  height: 40px;
+}
+
+.big:hover {
+  top: -2px;
+  position: relative;
+}
+
+.voted {
+  font-size: 28px;
+}
+
+#user {
+  opacity: 0.4;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+#heart:before {
+  content: '❤';
+}
+
+#heart:hover, #heart.voted {
+  color: #f92672;
+}
+
+#up:before {
+  content: '▲';
+}
+
+#up:hover, #up.voted {
+  color: #a6e22e;
+}
+
+#down:before {
+  content: '▼';
+}
+
+#down:hover, #down.voted {
+  color: #66d9ef;
+  top: 2px;
+}

@@ -1,0 +1,31 @@
+<style>
+.btn {
+  border: 0;
+  background-color: #50617A;
+  padding: 18px 30px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: .0875em;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-radius: 100px;
+  outline: 0;
+  transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1), color 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.btn:focus, .btn:active,
+.btn:hover {
+  background-color: #6EB1FF;
+  color: white;
+}
+</style>
+<p>
+	Hurray!!! Join the conversation with your peers @
+	<a rel="nofollow" style='text-decoration:none; color:#333'>
+		<%= @team %>
+	</a>
+	.
+</p>
+<a href='<%= @link %>' class="btn">Sign In Now!</a>

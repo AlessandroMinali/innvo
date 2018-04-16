@@ -1,0 +1,11 @@
+%link{rel:"stylesheet", href:"/css/application.css"}
+%h1
+  %a{href: '/', style: 'text-decoration: none; color: white;'} Innovo
+#user
+  = current_user
+%div{class:"container"}
+  - if !login_or_idea?
+    %a{href: '/idea/new', style: "text-decoration: none; color: white;"}
+      %button{class: "btn"}
+        + New Idea
+  = yield

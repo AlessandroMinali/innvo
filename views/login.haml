@@ -1,0 +1,8 @@
+%h2 Speak Your Mind
+%form{class: "form", method: 'post', action: "/login"}
+  %fieldset{class: "form-fieldset ui-input __second"}
+    %input#email{type: "email", tabindex:"0", required: true, name: "email"}
+    %label{for: "email"}
+      %span{'data-text': "E-mail Address"} E-mail Address
+  %div{class: "form-footer"}
+    %input.btn{type: "submit", value: "Login"}

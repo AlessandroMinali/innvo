@@ -1,0 +1,10 @@
+%form{class: "form", method: 'post', action: "/idea"}
+  %fieldset{class: "form-fieldset ui-input __second"}
+    %input{type: "text", id: "title", tabindex:"0", required: true, name: "title"}
+    %label{for: "title"}
+      %span{'data-text': "Title"} Title
+    %textarea{id: "description", tabindex:"0", required: true, name: "desc"}
+    %label{for: "description"}
+      %span{'data-text': "Description"} description
+  %div{class: "form-footer"}
+    %input.btn{type: "submit", value: "Submit"}
