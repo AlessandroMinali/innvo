@@ -2,7 +2,7 @@
 %h1
   %a{href: '/', style: 'text-decoration: none; color: white;'} Innovo
 #user
-  = current_user
+  = current_user.email
 %div{class:"container"}
   - if !login_or_idea?
     %a{href: '/idea/new', style: "text-decoration: none; color: white;"}
