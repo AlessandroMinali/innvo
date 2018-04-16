@@ -11,6 +11,8 @@ require_relative 'model'
 # style: https://codepen.io/cbp/pen/XJGQqZ?limit=all&page=3&q=form
 # alt style: https://codepen.io/matmarsiglio/pen/HLIor?q=form&limit=all&type=type-pens
 
+# https://devcenter.heroku.com/articles/config-vars
+
 # switch id to uuid for showing page
 # can spam user with login requests
 # archive ideas
@@ -84,10 +86,10 @@ end
 
 post '/login' do
   if params[:email].split('@').last == settings.team
-    # Thread.new do
+    Thread.new do
       token = SecureRandom.uuid
       user = User.find_or_create(email: params[:email])
-      user.update(token: token)
+      user.update(token: token, uuid: SecureRandom.uuid)
 
       @link = "#{request.scheme}://"\
               "#{request.host}"\
@@ -108,7 +110,7 @@ post '/login' do
       mail[:to] = params[:email]
       mail[:from] = 'innovo-d@degica.com'
       mail.deliver!
-    # end
+    end
 
     redirect to('/login/thanks')
   else
