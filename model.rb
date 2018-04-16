@@ -16,6 +16,7 @@ unless DB.tables.include? :users
     primary_key :id
     String :email, unique: true
     String :token, unique: true
+    TrueClass :logged_in
   end
 end
 

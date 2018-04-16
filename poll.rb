@@ -78,10 +78,10 @@ get '/login/reject' do
 end
 
 get '/login/:token' do
-  user = User.find(token: params[:token])
+  user = User.find(token: params[:token], logged_in: false)
   unless user.nil?
     session[:email] = user.email
-    user.update(token: nil)
+    user.update(logged_in: true)
   end
   redirect to('/')
 end
