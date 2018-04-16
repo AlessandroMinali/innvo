@@ -36,10 +36,6 @@ helpers do
     session[:email]
   end
 
-  def current_token
-    current_user.token if current_email
-  end
-
   def login_or_idea?
     %w[/login /login/thanks /login/reject /idea/new].include? request.path_info
   end
@@ -78,17 +74,17 @@ get '/login/reject' do
 end
 
 get '/login/:token' do
-  user = User.find(token: params[:token], logged_in: false)
+  user = User.find(token: params[:token])
   unless user.nil?
     session[:email] = user.email
-    user.update(logged_in: true)
+    user.update(token: nil)
   end
   redirect to('/')
 end
 
 post '/login' do
   if params[:email].split('@').last == settings.team
-    Thread.new do
+    # Thread.new do
       token = SecureRandom.uuid
       user = User.find_or_create(email: params[:email])
       user.update(token: token)
@@ -112,7 +108,7 @@ post '/login' do
       mail[:to] = params[:email]
       mail[:from] = 'innovo-d@degica.com'
       mail.deliver!
-    end
+    # end
 
     redirect to('/login/thanks')
   else
@@ -142,7 +138,7 @@ post '/idea/:id/vote' do
   @idea = Idea.find(id: params[:id])
   halt 404 if @idea.nil?
 
-  @user = User.find(token: params[:user])
+  @user = User.find(uuid: params[:user])
   halt 404 if @user.nil?
 
   halt 404 unless %w[up heart down].include?(params[:vote])
