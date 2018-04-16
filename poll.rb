@@ -88,7 +88,7 @@ end
 
 post '/login' do
   if params[:email].split('@').last == settings.team
-    # Thread.new do
+    Thread.new do
       token = SecureRandom.uuid
       user = User.find_or_create(email: params[:email])
       user.update(token: token)
@@ -112,7 +112,7 @@ post '/login' do
       mail[:to] = params[:email]
       mail[:from] = 'innovo-d@degica.com'
       mail.deliver!
-    # end
+    end
 
     redirect to('/login/thanks')
   else
