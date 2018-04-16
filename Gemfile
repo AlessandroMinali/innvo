@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'hamlit'
+gem 'redcarpet'
 gem 'mail'
 gem 'sequel'
 gem 'sinatra'

@@ -25,6 +25,7 @@ GEM
       rack
     rack-smack (1.0.0)
     rainbow (3.0.0)
+    redcarpet (3.4.0)
     rubocop (0.54.0)
       parallel (~> 1.10)
       parser (>= 2.5)
@@ -54,6 +55,7 @@ DEPENDENCIES
   pg
   pry
   rack-smack
+  redcarpet
   rubocop
   sequel
   sinatra
