@@ -14,13 +14,17 @@
 
 :javascript
   function sendVote(el) {
+    prev_vote = document.querySelector('.voted');
+    prev_vote && prev_vote.classList.remove('voted');
+    el.target.classList.add('voted');
+
     var xhttp = new XMLHttpRequest();
 
     xhttp.onload = function() {
       if (xhttp.status >= 200 && xhttp.status < 400) {
-        prev_vote = document.querySelector('.voted');
-        prev_vote && prev_vote.classList.remove('voted');
-        el.target.classList.add('voted');
+      } else {
+        prev_vote && prev_vote.classList.add('voted');
+        el.target.classList.remove('voted');
       }
     };
 
