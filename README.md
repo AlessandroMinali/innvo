@@ -8,5 +8,5 @@ bundle
 rackup
 ```
 
+#### Set ENV var `EMAIL_DOMAIN` to whitelist your teams emails, ex. `degica.com`
 #### Need ENV vars in order to send email: `EMAIL_USERNAME` and `EMAIL_PASSWORD`
-#### Hardcoded for `@degica.com` email signup only
