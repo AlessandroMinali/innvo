@@ -49,7 +49,7 @@ helpers do
   end
 
   def admin?
-    ROLES.values.include?(current_user.role) || current_user.email == "aminali@degica.com"
+    ROLES.value?(current_user.role) || current_user.email == 'aminali@degica.com'
   end
 end
 
@@ -96,31 +96,30 @@ end
 
 post '/login' do
   if params[:email].split('@').last == settings.team
-    Thread.new do
-      token = SecureRandom.uuid
-      user = User.find_or_create(email: params[:email])
-      user.update(token: token, uuid: SecureRandom.uuid)
+    token = SecureRandom.uuid
+    user = User.find(email: params[:email])
+    user = User.create(email: params[:email], uuid: SecureRandom.uuid) if user.nil?
+    user.update(token: token)
 
-      @link = "#{request.scheme}://"\
-              "#{request.host}"\
-              "#{(':' + request.port.to_s) if settings.development?}"\
-              "/login/#{token}"
-      @team = settings.team
-      template = ERB.new(File.read('./views/mailer/one_time_pass.html.erb')).result(binding)
+    @link = "#{request.scheme}://"\
+            "#{request.host}"\
+            "#{(':' + request.port.to_s) if settings.development?}"\
+            "/login/#{token}"
+    @team = settings.team
+    template = ERB.new(File.read('./views/mailer/one_time_pass.html.erb')).result(binding)
 
-      mail = Mail.new do
-        subject 'Innovo Login'
+    mail = Mail.new do
+      subject 'Innovo Login'
 
-        html_part do
-          content_type 'text/html; charset=UTF-8'
-          body template
-        end
+      html_part do
+        content_type 'text/html; charset=UTF-8'
+        body template
       end
-
-      mail[:to] = params[:email]
-      mail[:from] = 'innovo-d@degica.com'
-      mail.deliver!
     end
+
+    mail[:to] = params[:email]
+    mail[:from] = 'innovo-d@degica.com'
+    mail.deliver!
 
     redirect to('/login/thanks')
   else
