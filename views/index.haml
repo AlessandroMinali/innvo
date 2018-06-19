@@ -9,10 +9,10 @@
 .items
   - @ideas.each do |i|
     %a{href: "/idea/#{i.uuid}", style: "display: block;"}
-      %h3.item-title= i.title
+      %h3.item-title= i.post
       %p.item-desc{style: "text-align:left"}
         :markdown
-          #{i.desc[0..100]}
+          #{i.body[0..100]}
           ...
       .item-popularity{style: "text-align:center"}
         %span#up

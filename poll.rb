@@ -55,12 +55,11 @@ end
 
 enable :sessions
 
-set :haml, escape_html: false
-set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
-# set :static_cache_control, [:public, :max_age => 259200]
-
 configure do
   set team: ENV.fetch('EMAIL_DOMAIN') { 'degica.com' }
+  set :haml, escape_html: false
+  set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+  # set :static_cache_control, [:public, :max_age => 259200]
 end
 
 before do
@@ -96,30 +95,32 @@ end
 
 post '/login' do
   if params[:email].split('@').last == settings.team
-    token = SecureRandom.uuid
-    user = User.find(email: params[:email])
-    user = User.create(email: params[:email], uuid: SecureRandom.uuid) if user.nil?
-    user.update(token: token)
+    Thread.new do
+      token = SecureRandom.uuid
+      user = User.find(email: params[:email])
+      user = User.create(email: params[:email], uuid: SecureRandom.uuid) if user.nil?
+      user.update(token: token)
 
-    @link = "#{request.scheme}://"\
-            "#{request.host}"\
-            "#{(':' + request.port.to_s) if settings.development?}"\
-            "/login/#{token}"
-    @team = settings.team
-    template = ERB.new(File.read('./views/mailer/one_time_pass.html.erb')).result(binding)
+      @link = "#{request.scheme}://"\
+              "#{request.host}"\
+              "#{(':' + request.port.to_s) if settings.development?}"\
+              "/login/#{token}"
+      @team = settings.team
+      template = ERB.new(File.read('./views/mailer/one_time_pass.html.erb')).result(binding)
 
-    mail = Mail.new do
-      subject 'Innovo Login'
+      mail = Mail.new do
+        subject 'Innovo Login'
 
-      html_part do
-        content_type 'text/html; charset=UTF-8'
-        body template
+        html_part do
+          content_type 'text/html; charset=UTF-8'
+          body template
+        end
       end
-    end
 
-    mail[:to] = params[:email]
-    mail[:from] = 'innovo-d@degica.com'
-    mail.deliver!
+      mail[:to] = params[:email]
+      mail[:from] = 'innovo-d@degica.com'
+      mail.deliver!
+    end
 
     redirect to('/login/thanks')
   else

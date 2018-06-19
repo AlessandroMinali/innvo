@@ -1,4 +1,4 @@
-%h2#title= @idea.title
+%h2#title= @idea.post
 
 :css 
   .container{
@@ -7,7 +7,7 @@
 
 .item-desc
   :markdown
-    #{@idea.desc}
+    #{@idea.body}
 %span#up.big
 %span#heart.big
 %span#down.big

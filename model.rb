@@ -35,6 +35,14 @@ class Idea < Sequel::Model
   many_to_one :user
   one_to_many :votes
 
+  def post
+    CGI.escapeHTML title
+  end
+
+  def body
+    CGI.escapeHTML desc
+  end
+
   def likes
     votes_dataset.where(vote: 'up').count
   end
