@@ -12,7 +12,7 @@
       %h3.item-title= i.post
       %p.item-desc{style: "text-align:left"}
         :markdown
-          #{i.body[0..100]}
+          #{i.body[0..255]}
           ...
       .item-popularity{style: "text-align:center"}
         %span#up
