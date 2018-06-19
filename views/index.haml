@@ -1,14 +1,22 @@
 %h2 Ideas @ Degica
 
+:css 
+  .container{
+    max-width: 60%;
+    overflow-wrap: break-word;
+  }
+
 .items
   - @ideas.each do |i|
-    %a{href: "/idea/#{i.id}", style: "display: block;"}
+    %a{href: "/idea/#{i.uuid}", style: "display: block;"}
       %h3.item-title= i.title
-      %p.item-desc<
-        =  i.desc[0..40]
-        = '...'
-      .item-popularity
+      %p.item-desc{style: "text-align:left"}
+        :markdown
+          #{i.desc[0..100]}
+          ...
+      .item-popularity{style: "text-align:center"}
         %span#up
           = i.likes
         %span#heart
           = i.super_likes
+      = haml :_delete, locals: { idea: i }

@@ -23,7 +23,7 @@ h2 {
 input, textarea { color: white; }
 
 .container {
-  max-width: 320px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px 16px 40px 16px;
   transform: translateZ(0);
@@ -157,13 +157,6 @@ input, textarea { color: white; }
 
 .ui-input textarea {
   font-family: "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  border: 0;
-  background: none;
-  padding: 16px 0 16px 0;
-  font-size: 24px;
-  outline: 0;
-  width: 100%;
-  height: 200px;
   tap-highlight-color: rgba(0, 0, 0, 0);
   border: 1px solid rgba(255, 255, 255, .1);
   touch-callout: none;
@@ -328,8 +321,8 @@ input, textarea { color: white; }
   }
 }
 
-ul {
-  padding: 0px;
+.items {
+  text-align: left;
 }
 
 .items a {
@@ -337,7 +330,12 @@ ul {
   color: white;
   padding-left: 5px;
   padding-right: 5px;
-  overflow-wrap: break-word;
+  overflow-wrap: break-word
+}
+
+.items a:not(:last-child) {
+  padding: 10px 0px;
+  border-bottom: 1px solid #aaa;
 }
 
 .items a:hover {
@@ -396,6 +394,20 @@ span {
   top: 2px;
 }
 
-.item-desc > p {
+.item-title {
+  text-align: center;
+}
+
+.item-desc {
   text-align: left;
+  font-size: 14px;
+}
+
+#title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#logo {
+  font-size: 40px;
 }

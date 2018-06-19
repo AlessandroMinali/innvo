@@ -4,6 +4,10 @@ require 'sinatra'
 require 'hamlit'
 require 'sequel'
 require 'mail'
+if development?
+  require 'sinatra/reloader'
+  require 'pry'
+end
 
 require_relative 'model'
 
@@ -13,10 +17,7 @@ require_relative 'model'
 
 # https://devcenter.heroku.com/articles/config-vars
 
-# switch id to uuid for showing page
-# can spam user with login requests
-# archive ideas
-# admin
+# support admins
 
 options = { address: 'smtp.gmail.com',
             port: 587,
@@ -24,6 +25,11 @@ options = { address: 'smtp.gmail.com',
             password: ENV.fetch('EMAIL_PASSWORD'),
             authentication: 'plain',
             enable_starttls_auto: true }
+
+ROLES = {
+  admin: 1,
+  support: 2
+}.freeze
 
 Mail.defaults do
   delivery_method :smtp, options
@@ -40,6 +46,10 @@ helpers do
 
   def login_or_idea?
     %w[/login /login/thanks /login/reject /idea/new].include? request.path_info
+  end
+
+  def admin?
+    ROLES.values.include?(current_user.role) || current_user.email == "aminali@degica.com"
   end
 end
 
@@ -114,7 +124,7 @@ post '/login' do
 
     redirect to('/login/thanks')
   else
-    redirect to('login/reject')
+    redirect to('/login/reject')
   end
 end
 
@@ -122,8 +132,8 @@ get '/idea/new' do
   haml :new
 end
 
-get '/idea/:id' do
-  @idea = Idea.find(id: params[:id])
+get '/idea/:uuid' do
+  @idea = Idea.find(uuid: params[:uuid])
   @vote = Vote.find(user_id: current_user.id, idea_id: @idea.id)&.vote
   haml :show
 end
@@ -131,13 +141,14 @@ end
 post '/idea' do
   wanted_keys = %w[title desc]
   params.keep_if { |key, _| wanted_keys.include? key }
+        .merge!(user_id: current_user.id, uuid: SecureRandom.uuid)
 
-  id = Idea.create(params).id
+  id = Idea.create(params).uuid
   redirect to("/idea/#{id}")
 end
 
-post '/idea/:id/vote' do
-  @idea = Idea.find(id: params[:id])
+post '/idea/:uuid/vote' do
+  @idea = Idea.find(uuid: params[:uuid])
   halt 404 if @idea.nil?
 
   @user = User.find(uuid: params[:user])
@@ -152,4 +163,9 @@ post '/idea/:id/vote' do
   else
     Vote.create(user_id: @user.id, idea_id: @idea.id, vote: params[:vote])
   end
+end
+
+get '/idea/:uuid/destroy' do
+  admin? && Idea.find(uuid: params[:uuid]).destroy
+  redirect to('/')
 end

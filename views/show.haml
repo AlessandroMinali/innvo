@@ -1,8 +1,7 @@
-%h2= @idea.title
+%h2#title= @idea.title
 
 :css 
   .container{
-    max-width: 80%;
     overflow-wrap: break-word;
   }
 
@@ -12,6 +11,8 @@
 %span#up.big
 %span#heart.big
 %span#down.big
+%br
+= haml :_delete, locals: { idea: @idea }
 
 :javascript
   function sendVote(el) {

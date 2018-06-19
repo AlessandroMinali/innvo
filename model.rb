@@ -5,27 +5,29 @@ DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://poll.db')
 unless DB.tables.include? :ideas
   DB.create_table :ideas do
     primary_key :id
-    Integer :user_id
-    String :title, unique: true
-    String :desc
+    String :uuid, unique: true, null: false
+    Integer :user_id, null: false
+    String :title, unique: true, null: false
+    String :desc, null: false
   end
 end
 
 unless DB.tables.include? :users
   DB.create_table :users do
     primary_key :id
-    String :email, unique: true
+    String :email, unique: true, null: false
     String :token, unique: true
-    String :uuid, unique: true
+    String :uuid, unique: true, null: false
+    Integer :role
   end
 end
 
 unless DB.tables.include? :votes
   DB.create_table :votes do
     primary_key :id
-    Integer :user_id
-    Integer :idea_id
-    String :vote
+    Integer :user_id, null: false
+    Integer :idea_id, null: false
+    String :vote, null: false
   end
 end
 
@@ -58,15 +60,18 @@ end
 
 def fake_string(length)
   string = ''
-  string << ('a'..'z').to_a.shuffle.join while string.length < length
+  string += ('a'..'z').to_a.shuffle.join while string.length < length
   string[0..length]
 end
 
-# 3.times do
-#   Idea.create(user_id: rand(10),
-#               title: fake_string(12),
-#               desc: fake_string(140),
-#               likes: rand(20),
-#               super_likes: rand(3),
-#               dislikes: rand(10))
-# end if Idea.count.zero? and settings.development?
+if settings.development?
+  if Idea.count.zero?
+    3.times do
+      Idea.create(user_id: rand(10),
+                  uuid: SecureRandom.uuid,
+                  title: fake_string(12),
+                  desc: fake_string(140))
+    end
+  end
+  User.create(email: 'example@test.com', uuid: SecureRandom.uuid, role: 1) if User.count.zero?
+end
