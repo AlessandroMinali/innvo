@@ -1,10 +1,11 @@
 - if admin?
-  %button{onclick:"delete_idea()", style: "cursor: pointer"}
+  - tag = idea.uuid.split('-').first
+  %button{onclick:"delete_idea_#{tag}()", style: "cursor: pointer"}
     %h4{style: "color:red;"} Delete this Idea
 
-:javascript
-  function delete_idea() {
-    if (confirm("Are you sure you want to delete #{idea.post}")) {
-      window.location = window.location.protocol+"//"+window.location.host+"/idea/#{idea.uuid}/destroy"
+  :javascript
+    function delete_idea_#{tag}() {
+      if (confirm("Are you sure you want to delete #{idea.post}")) {
+        window.location = window.location.protocol+"//"+window.location.host+"/idea/#{idea.uuid}/destroy"
+      }
     }
-  }
