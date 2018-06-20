@@ -19,4 +19,5 @@
           = i.likes
         %span#heart
           = i.super_likes
+      = haml :_edit, locals: { idea: i }
       = haml :_delete, locals: { idea: i }

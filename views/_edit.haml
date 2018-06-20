@@ -1,0 +1,8 @@
+- tag = idea.uuid.split('-').first
+%button{onclick:"edit_idea_#{tag}()", style: "cursor: pointer"}
+  %h4{style: "color: green;"} Edit this Idea
+
+:javascript
+  function edit_idea_#{tag}() {
+    window.location = window.location.protocol+"//"+window.location.host+"/idea/#{idea.uuid}/edit"
+  }

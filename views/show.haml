@@ -12,6 +12,7 @@
 %span#heart.big
 %span#down.big
 %br
+= haml :_edit, locals: { idea: @idea }
 = haml :_delete, locals: { idea: @idea }
 
 :javascript

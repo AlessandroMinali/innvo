@@ -165,6 +165,24 @@ post '/idea/:uuid/vote' do
   end
 end
 
+get '/idea/:uuid/edit' do
+  @idea = Idea.find(uuid: params[:uuid])
+  redirect to('/') unless current_user.id == @idea.user_id || admin?
+
+  haml :edit
+end
+
+post '/idea/:uuid/edit' do
+  @idea = Idea.find(uuid: params[:uuid])
+  redirect to('/') unless current_user.id == @idea.user_id || admin?
+
+  wanted_keys = %w[title desc]
+  params.keep_if { |key, _| wanted_keys.include? key }
+
+  id = @idea.update(params).uuid
+  redirect to("/idea/#{id}")
+end
+
 get '/idea/:uuid/destroy' do
   admin? && Idea.find(uuid: params[:uuid]).destroy
   redirect to('/')

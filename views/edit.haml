@@ -1,0 +1,74 @@
+%script{src:"https://unpkg.com/vue@2.5.16/dist/vue.js"}
+%script{src:"https://unpkg.com/marked@0.3.6"}
+%script{src:"https://unpkg.com/lodash@4.16.0"}
+
+%form{class: "form", method: 'post', action: "/idea/#{@idea.uuid}/edit"}
+  %fieldset{class: "form-fieldset ui-input __second"}
+    %input{type: "text", id: "title", tabindex:"0", required: true, name: "title", autofocus: true, value: @idea.title}
+    %label{for: "title"}
+      %span{'data-text': "Title"} Title
+    #editor
+      %div{style: "float: left;"}
+        %textarea{":value":"input", "@input":"update", id: "description", tabindex:"0", required: true, name: "desc"}
+        %label{for: "description"}
+          %span{'data-text': "Description"} description
+      %div{"v-html":"compiledMarkdown", style: "overflow: scroll; float: right; background-color: #66768c; margin-right: 15px;"}
+        Preview
+      %span{style: "float: right; margin-right: 40px;"}
+        %a{href:"https://en.wikipedia.org/wiki/Markdown#Example", style:"color: white;"} Formatting Help ?
+
+  %div{class: "form-footer"}
+    %input.btn{type: "submit", value: "Submit"}
+
+:javascript
+    new Vue({
+      el: '#editor',
+      data: {
+        input: #{@idea.desc.inspect}
+      },
+      computed: {
+        compiledMarkdown: function () {
+          return marked(this.input, { sanitize: true })
+        }
+      },
+      methods: {
+        update: _.debounce(function (e) {
+          this.input = e.target.value
+        }, 300)
+      }
+    })
+
+:css
+    textarea, #editor div, #editor > label {
+      display: inline-block;
+      width: 49%;
+      height: 500px;
+      vertical-align: top;
+      box-sizing: border-box;
+      padding: 0 20px;
+    }
+
+    #editor > label {
+      display: inline-block;
+    }
+
+    form {
+      margin:1em calc(52% - 50vw);
+    }
+
+    textarea {
+      width: 100%;
+      color: black;
+      border: none;
+      border-right: 1px solid #ccc;
+      resize: none;
+      outline: none;
+      background-color: #f6f6f6;
+      font-size: 14px;
+      font-family: 'Monaco', courier, monospace;
+      padding: 20px;
+    }
+
+    #editor {
+      text-align: left
+    }
