@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'hamlit'
+gem 'haml'
 gem 'mail'
 gem 'rack-smack'
 gem 'redcarpet'

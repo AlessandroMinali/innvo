@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: rackup
+    ports:
+      - "80:9292"
+    volumes:
+      - ./poll.db:/usr/src/app/poll.db
+    env_file:
+      - docker.env

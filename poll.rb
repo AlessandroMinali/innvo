@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra'
-require 'hamlit'
+require 'haml'
 require 'sequel'
 require 'mail'
 if development?
@@ -56,6 +56,8 @@ end
 enable :sessions
 
 configure do
+  set :bind, '0.0.0.0'
+
   set team: ENV.fetch('EMAIL_DOMAIN') { 'degica.com' }
   set :haml, escape_html: false
   set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }

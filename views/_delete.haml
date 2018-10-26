@@ -5,7 +5,7 @@
 
   :javascript
     function delete_idea_#{tag}() {
-      if (confirm("Are you sure you want to delete #{idea.post}")) {
+      if (confirm("Are you sure you want to delete #{idea.post.gsub("\n", " ")}")) {
         window.location = window.location.protocol+"//"+window.location.host+"/idea/#{idea.uuid}/destroy"
       }
     }
