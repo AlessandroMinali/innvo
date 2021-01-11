@@ -37,7 +37,7 @@ GEM
       rack
     rack-smack (1.0.0)
     rainbow (3.0.0)
-    redcarpet (3.4.0)
+    redcarpet (3.5.1)
     rubocop (0.57.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
